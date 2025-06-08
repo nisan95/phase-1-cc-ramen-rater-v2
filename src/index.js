@@ -18,7 +18,15 @@ const addSubmitListener = () => {
     const newRamen=document.getElementById("new-ramen");
     newRamen.addEventListener("submit", function(event){
     event.preventDefault();
-    const ramen = {
+    handleSubmit();
+    newRamen.reset();
+  
+  });
+};
+
+const handleSubmit = () => {
+  const newRamen=document.getElementById("new-ramen");
+  const ramen = {
     "name": newRamen.elements["name"].value,
     "restaurant": newRamen.elements["restaurant"].value,
     "image": newRamen.elements["image"].value,
@@ -34,13 +42,19 @@ const addSubmitListener = () => {
         })
         .then(response => response.json()) 
         .then(data => {
-            // Refresh the ramen list to include the new ramen
-            displayRamens();
+      
         });
-  
-  });
-};
+        const menu=document.getElementById("ramen-menu");
+            const img=document.createElement("img");
+            img.className="image-ramen";
+            img.src=ramen.image;
+            img.alt=ramen.name;
+            menu.appendChild(img);
 
+            const ramenMenuDivAfter = document.querySelectorAll('#ramen-menu img');
+            const image = ramenMenuDivAfter[ramenMenuDivAfter.length -1];
+            image.addEventListener("click", () => handleClick(ramen));
+};
     
 const displayRamens = () => {
   // Add code
@@ -67,7 +81,7 @@ const main = () => {
   displayRamens();
   // Invoke addSubmitListener here
   addSubmitListener();
-}
+};
 
 
 
@@ -78,6 +92,7 @@ export {
   displayRamens,
   addSubmitListener,
   handleClick,
+  handleSubmit,
   main,
 };
 
